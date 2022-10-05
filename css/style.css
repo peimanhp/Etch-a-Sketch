@@ -1,0 +1,22 @@
+@font-face {
+  font-family: roboto;
+  src: url(../resources/roboto-regular-webfont.woff2);
+}
+
+@font-face {
+  font-family: roboto-bold;
+  src: url(../resources/roboto-bold-webfont.woff2);
+}
+
+* {
+  font-family: roboto, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
