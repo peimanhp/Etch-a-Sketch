@@ -28,7 +28,14 @@ body {
   box-sizing: content-box;
   font-size: 0;
   padding: 0;
-  width: 960px;
-  height: 960px;
+  width: 500px;
+  height: 500px;
+}
+
+@media (max-width: 540px) { 
+  #sketch_board {
+    width: 320px;
+    height: 320px;
+  }
 }
 

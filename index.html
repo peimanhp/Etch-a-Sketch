@@ -14,8 +14,29 @@
 
 <body>
     <main>
-        <div class="container d-flex">
-            <div id="sketch_board">
+        <div class="container mt-5">
+            <div class="row d-flex justify-content-between">
+                <div class="col controls">
+                    <!-- color picker -->
+                    <label for="exampleColorInput" class="form-label">Color picker</label>
+                    <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c"
+                        title="Choose your color">
+                        <!-- rainbow button -->
+                    <button class="btn btn-primary mt-3" id="rainbow">Rainbow Colors</button>
+                    <!-- eraser button -->
+                    <button class="btn btn-primary mt-3" id="eraser">Eraser</button>
+                    <!-- grid off button -->
+                    <button class="btn btn-primary mt-3" id="no_grid">No Grid</button>
+                    <!-- clear button -->
+                    <button class="btn btn-primary mt-3" id="clear">Clear</button>
+                    <!-- grid range -->
+                    <label for="grid_range" class="form-label mt-3 d-block">Grid range</label>
+                    <input type="range" class="form-range" min="11" max="99" id="grid_range">
+                </div>
+                <div class="col">
+                    <div class="mx-auto mt-3" id="sketch_board">
+                    </div>
+                </div>
             </div>
         </div>
 

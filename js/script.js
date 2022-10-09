@@ -6,9 +6,19 @@ let rows = {
   },
 };
 
-rows.input = 20;
 
-let grid = Math.floor(960 / rows);
+rows.input = 15;
+// rows.input = document.getElementById('grid_range').value;
+// console.log(rows.input);
+
+// setup sketch width
+let widthScreen = screen.width;
+let sketchWidth
+if (widthScreen < 540) {
+  sketchWidth = 320
+} else sketchWidth = 500
+
+let grid = Math.floor(sketchWidth / rows);
 console.log(grid);
 
 const sketchBoard = document.getElementById("sketch_board");
@@ -31,23 +41,31 @@ let squaresArray = []; // array of all squares
 function numOfSquars(grid) {
   for (let i = 0; i < grid * grid; i++) {
     createSquars(i);
+    document.getElementById(i).addEventListener("mousedown", brush);
+    document.getElementById(i).addEventListener("mouseover", brush);
     squaresArray[i] = document.getElementById(i);
   }
 }
 
 // give a number and call create squares with the number
 numOfSquars(grid);
+let selectedColor = document.getElementById("exampleColorInput");
+selectedColor.addEventListener("click", changeColor);
+function changeColor() {
+  return selectedColor.value;
+}
+
 
 // brush squares with click and mouseover them
+let mouseDown = false;
+document.body.addEventListener("mousedown", () => {
+  mouseDown = true;
+});
+document.body.addEventListener("mouseup", () => {
+  mouseDown = false;
+});
 
-window.addEventListener("mousedown", brush);
-
-function brush() {  
-  for (let i = 0; i < squaresArray.length; i++) {
-    let square = squaresArray[i];
-    square.addEventListener("mouseover", brushing);
-    function brushing() {
-      square.style.backgroundColor = "red";
-    }
-  }
+function brush(e) {
+  if (e.type === "mouseover" && !mouseDown) return;
+  else e.target.style.backgroundColor = changeColor();
 }
