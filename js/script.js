@@ -1,24 +1,36 @@
-let rows = {
-  set input(num) {
-    if (num > 10 && num < 100) {
-      rows = num;
-    } else console.log("peiman: number is not allowed!");
-  },
+let rows = 44;
+let grid = 11;
+
+// stop dragging elements
+document.body.ondragstart = () => {
+  return false;
 };
 
+// change grid with grid handler
+let range = document.getElementById("grid_range");
+range.oninput = (e) => {
+  rows = e.target.value;
+  grid = Math.floor(sketchWidth / rows);
+  sketchBoard.innerHTML = "";
+  sketchBoard.style.border = "";
+  numOfSquars(grid);
+};
 
-rows.input = 15;
-// rows.input = document.getElementById('grid_range').value;
-// console.log(rows.input);
+// buttons
+const selectedColorBtn = document.getElementById("selectedColorBtn");
+const rainbowBtn = document.getElementById("rainbowBtn");
+const eraser = document.getElementById("eraser");
+const noGrid = document.getElementById("no_grid");
+const clear = document.getElementById("clear");
+const Save = document.getElementById("Save");
 
 // setup sketch width
 let widthScreen = screen.width;
-let sketchWidth
+let sketchWidth;
 if (widthScreen < 540) {
-  sketchWidth = 320
-} else sketchWidth = 500
+  sketchWidth = 320;
+} else sketchWidth = 500;
 
-let grid = Math.floor(sketchWidth / rows);
 console.log(grid);
 
 const sketchBoard = document.getElementById("sketch_board");
@@ -55,7 +67,6 @@ function changeColor() {
   return selectedColor.value;
 }
 
-
 // brush squares with click and mouseover them
 let mouseDown = false;
 document.body.addEventListener("mousedown", () => {
@@ -67,5 +78,35 @@ document.body.addEventListener("mouseup", () => {
 
 function brush(e) {
   if (e.type === "mouseover" && !mouseDown) return;
-  else e.target.style.backgroundColor = changeColor();
+  else if (rainbowBtn.checked == true) {
+    let r = Math.floor(Math.random() * 255);
+    let g = Math.floor(Math.random() * 255);
+    let b = Math.floor(Math.random() * 255);
+
+    e.target.style.backgroundColor = `rgb(${r},${g},${b})`;
+  } else if (selectedColorBtn.checked == true) {
+    e.target.style.backgroundColor = changeColor();
+  } else if (eraserBtn.checked == true) {
+    e.target.style.backgroundColor = "";
+  }
+}
+
+noGrid.addEventListener('click', onOffGrid);
+
+function onOffGrid() {
+  squaresArray.forEach(item => {
+    if (!item.style.border) {
+      item.style.border = "1px solid black";
+      sketchBoard.style.border = "";
+    } else {
+      item.style.border = "";
+      sketchBoard.style.border = "1px solid black";
+    }     
+  });
+}
+
+clear.addEventListener('click', resetAll);
+
+function resetAll() {
+  squaresArray.forEach(item => { item.style.backgroundColor = '' });
 }

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
-<body>
+<body">
     <main>
         <div class="container mt-5">
             <div class="row d-flex justify-content-between">
@@ -21,14 +21,26 @@
                     <label for="exampleColorInput" class="form-label">Color picker</label>
                     <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c"
                         title="Choose your color">
-                        <!-- rainbow button -->
-                    <button class="btn btn-primary mt-3" id="rainbow">Rainbow Colors</button>
-                    <!-- eraser button -->
-                    <button class="btn btn-primary mt-3" id="eraser">Eraser</button>
-                    <!-- grid off button -->
-                    <button class="btn btn-primary mt-3" id="no_grid">No Grid</button>
-                    <!-- clear button -->
-                    <button class="btn btn-primary mt-3" id="clear">Clear</button>
+                    <div class="">
+                        <!-- color buttons -->
+                        <div class="btn-group mt-3 " role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="btnradio" id="selectedColorBtn"
+                                autocomplete="off" checked>
+                            <label class="btn btn-outline-primary text-nowrap" for="selectedColorBtn">Selected Color</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="rainbowBtn" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="rainbowBtn">Rainbow</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="eraserBtn" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="eraserBtn">Eraser</label>
+                        </div>                        
+                        <!-- grid off button -->
+                        <button class="btn btn-primary mt-3 text-nowrap" data-bs-toggle="button" id="no_grid">No Grid</button>
+                        <!-- clear button -->
+                        <button class="btn btn-primary mt-3" id="clear">Clear</button>
+                        <!-- save button -->
+                        <button class="btn btn-primary mt-3" id="Save">Save</button>
+                    </div>
                     <!-- grid range -->
                     <label for="grid_range" class="form-label mt-3 d-block">Grid range</label>
                     <input type="range" class="form-range" min="11" max="99" id="grid_range">
