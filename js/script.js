@@ -1,19 +1,10 @@
-let rows = 44;
-let grid = 11;
+let rows = 55;
+let grid = 9;
+let gridBtnPressed = 0;
 
 // stop dragging elements
 document.body.ondragstart = () => {
   return false;
-};
-
-// change grid with grid handler
-let range = document.getElementById("grid_range");
-range.oninput = (e) => {
-  rows = e.target.value;
-  grid = Math.floor(sketchWidth / rows);
-  sketchBoard.innerHTML = "";
-  sketchBoard.style.border = "";
-  numOfSquars(grid);
 };
 
 // buttons
@@ -24,14 +15,24 @@ const noGrid = document.getElementById("no_grid");
 const clear = document.getElementById("clear");
 const Save = document.getElementById("Save");
 
+noGrid.checked = false;
+
+// change grid with grid handler
+let range = document.getElementById("grid_range");
+range.value = 55;
+range.oninput = (e) => {
+  rows = e.target.value;
+  grid = Math.floor(sketchWidth / rows);
+  sketchBoard.innerHTML = "";
+  numOfSquars(grid);
+};
+
 // setup sketch width
 let widthScreen = screen.width;
 let sketchWidth;
 if (widthScreen < 540) {
   sketchWidth = 320;
 } else sketchWidth = 500;
-
-console.log(grid);
 
 const sketchBoard = document.getElementById("sketch_board");
 
@@ -41,7 +42,7 @@ function createSquars(id) {
   newDiv.id = id;
   newDiv.style.display = "inline-block";
   newDiv.style.boxSizing = "border-box";
-  newDiv.style.border = "1px solid black";
+  if (gridBtnPressed % 2 == 0) newDiv.style.border = "1px solid black";
   newDiv.style.width = `${rows}px`;
   newDiv.style.height = `${rows}px`;
   sketchBoard.appendChild(newDiv);
@@ -91,22 +92,25 @@ function brush(e) {
   }
 }
 
-noGrid.addEventListener('click', onOffGrid);
+noGrid.addEventListener("click", onOffGrid);
 
 function onOffGrid() {
-  squaresArray.forEach(item => {
-    if (!item.style.border) {
+  gridBtnPressed++;
+  squaresArray.forEach((item) => {
+    if (gridBtnPressed % 2 == 0) {
       item.style.border = "1px solid black";
       sketchBoard.style.border = "";
     } else {
       item.style.border = "";
       sketchBoard.style.border = "1px solid black";
-    }     
+    }
   });
 }
 
-clear.addEventListener('click', resetAll);
+clear.addEventListener("click", resetAll);
 
 function resetAll() {
-  squaresArray.forEach(item => { item.style.backgroundColor = '' });
+  squaresArray.forEach((item) => {
+    item.style.backgroundColor = "";
+  });
 }
