@@ -95,25 +95,6 @@ document.body.addEventListener("mouseup", () => {
   mouseDown = false;
 });
 
-function animationOnBrush() {
-  var animation = anime.timeline({});
-  animation
-    .add({
-      targets: e.target,
-      rotate: 180,
-      borderRadius: ["0%", "50%"],
-      easing: "easeInOutQuad",
-      duration: 400,
-    })
-    .add({
-      targets: e.target,
-      rotate: 180,
-      borderRadius: ["50%", "0%"],
-      easing: "easeInOutQuad",
-      duration: 400,
-    });
-}
-
 function brush(e) {
   function animationOnBrush() {
     var animation = anime.timeline({});
@@ -121,18 +102,16 @@ function brush(e) {
       .add({
         targets: e.target,
         rotate: 90,
-        scale: 1.1,
-        translateX: 50,
-        translateY: 50,
+        scale: 1.2,
+        
         easing: "easeInOutQuad",
         duration: 200,
       })
       .add({
         targets: e.target,
-        rotate: 90,
+        rotate: 0,
         scale: 1,
-        translateX: 0,
-        translateY: 0,
+        
         easing: "easeInOutQuad",
         duration: 200,
       });
