@@ -50,6 +50,7 @@ function createSquars(id) {
 
 let squaresArray = []; // array of all squares
 
+
 // creating a couple of scuares and index them for array
 function numOfSquars(grid) {
   for (let i = 0; i < grid * grid; i++) {
@@ -57,6 +58,23 @@ function numOfSquars(grid) {
     document.getElementById(i).addEventListener("mousedown", brush);
     document.getElementById(i).addEventListener("mouseover", brush);
     squaresArray[i] = document.getElementById(i);
+
+    var animation = anime.timeline({})
+    animation
+      .add({
+        targets: squaresArray[i],
+        rotate: 180,
+        borderRadius: ["0%", "50%"],
+        easing: "easeInOutQuad",
+        duration: 400,
+      })
+      .add({
+        targets: squaresArray[i],
+        rotate: 180,
+        borderRadius: ["50%", "0%"],
+        easing: "easeInOutQuad",
+        duration: 400,
+      });
   }
 }
 
@@ -77,16 +95,58 @@ document.body.addEventListener("mouseup", () => {
   mouseDown = false;
 });
 
+function animationOnBrush() {
+  var animation = anime.timeline({});
+  animation
+    .add({
+      targets: e.target,
+      rotate: 180,
+      borderRadius: ["0%", "50%"],
+      easing: "easeInOutQuad",
+      duration: 400,
+    })
+    .add({
+      targets: e.target,
+      rotate: 180,
+      borderRadius: ["50%", "0%"],
+      easing: "easeInOutQuad",
+      duration: 400,
+    });
+}
+
 function brush(e) {
+  function animationOnBrush() {
+    var animation = anime.timeline({});
+    animation
+      .add({
+        targets: e.target,
+        rotate: 90,
+        scale: 1.1,
+        translateX: 50,
+        translateY: 50,
+        easing: "easeInOutQuad",
+        duration: 200,
+      })
+      .add({
+        targets: e.target,
+        rotate: 90,
+        scale: 1,
+        translateX: 0,
+        translateY: 0,
+        easing: "easeInOutQuad",
+        duration: 200,
+      });
+  }
   if (e.type === "mouseover" && !mouseDown) return;
   else if (rainbowBtn.checked == true) {
     let r = Math.floor(Math.random() * 255);
     let g = Math.floor(Math.random() * 255);
-    let b = Math.floor(Math.random() * 255);
-
+    let b = Math.floor(Math.random() * 255);    
+    animationOnBrush();
     e.target.style.backgroundColor = `rgb(${r},${g},${b})`;
   } else if (selectedColorBtn.checked == true) {
     e.target.style.backgroundColor = changeColor();
+    animationOnBrush();
   } else if (eraserBtn.checked == true) {
     e.target.style.backgroundColor = "";
   }
