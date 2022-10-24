@@ -13,7 +13,7 @@ const rainbowBtn = document.getElementById("rainbowBtn");
 const eraser = document.getElementById("eraser");
 const noGrid = document.getElementById("no_grid");
 const clear = document.getElementById("clear");
-const Save = document.getElementById("Save");
+const boom = document.getElementById("boom");
 
 noGrid.checked = false;
 
@@ -25,6 +25,7 @@ range.oninput = (e) => {
   grid = Math.floor(sketchWidth / rows);
   sketchBoard.innerHTML = "";
   numOfSquars(grid);
+  animationOnCahnge();
 };
 
 // setup sketch width
@@ -40,6 +41,7 @@ const sketchBoard = document.getElementById("sketch_board");
 function createSquars(id) {
   const newDiv = document.createElement("div");
   newDiv.id = id;
+  newDiv.classList.add("squs");
   newDiv.style.display = "inline-block";
   newDiv.style.boxSizing = "border-box";
   if (gridBtnPressed % 2 == 0) newDiv.style.border = "1px solid black";
@@ -48,8 +50,29 @@ function createSquars(id) {
   sketchBoard.appendChild(newDiv);
 }
 
-let squaresArray = []; // array of all squares
+let squaresArray = []; // array of all squares}
 
+function animationOnCahnge() {
+  let width = document.querySelector(".squs").style.width;
+  widthLetters = width.split("");
+  widthLetters.pop();
+  widthLetters.pop();
+  let rows = widthLetters.join("");
+  rows = Math.floor(sketchWidth / rows);
+
+  var animation = anime.timeline({});
+  animation.add({
+    targets: ".squs",
+    scale: [
+      { value: 0.1, easing: "easeOutSine", duration: 500 },
+      { value: 1, easing: "easeInOutQuad", duration: 1200 },
+    ],
+    delay: anime.stagger(70, {
+      grid: [rows, rows],
+      from: "center",
+    }),
+  });
+}
 
 // creating a couple of scuares and index them for array
 function numOfSquars(grid) {
@@ -58,23 +81,6 @@ function numOfSquars(grid) {
     document.getElementById(i).addEventListener("mousedown", brush);
     document.getElementById(i).addEventListener("mouseover", brush);
     squaresArray[i] = document.getElementById(i);
-
-    var animation = anime.timeline({})
-    animation
-      .add({
-        targets: squaresArray[i],
-        rotate: 180,
-        borderRadius: ["0%", "50%"],
-        easing: "easeInOutQuad",
-        duration: 400,
-      })
-      .add({
-        targets: squaresArray[i],
-        rotate: 180,
-        borderRadius: ["50%", "0%"],
-        easing: "easeInOutQuad",
-        duration: 400,
-      });
   }
 }
 
@@ -103,24 +109,24 @@ function brush(e) {
         targets: e.target,
         rotate: 90,
         scale: 1.2,
-        
+
         easing: "easeInOutQuad",
-        duration: 200,
+        duration: 100,
       })
       .add({
         targets: e.target,
         rotate: 0,
         scale: 1,
-        
+
         easing: "easeInOutQuad",
-        duration: 200,
+        duration: 100,
       });
   }
   if (e.type === "mouseover" && !mouseDown) return;
   else if (rainbowBtn.checked == true) {
     let r = Math.floor(Math.random() * 255);
     let g = Math.floor(Math.random() * 255);
-    let b = Math.floor(Math.random() * 255);    
+    let b = Math.floor(Math.random() * 255);
     animationOnBrush();
     e.target.style.backgroundColor = `rgb(${r},${g},${b})`;
   } else if (selectedColorBtn.checked == true) {
@@ -151,5 +157,38 @@ clear.addEventListener("click", resetAll);
 function resetAll() {
   squaresArray.forEach((item) => {
     item.style.backgroundColor = "";
+  });
+}
+
+boom.addEventListener("click", BoonAnimation);
+
+function BoonAnimation() {
+  let width = document.querySelector(".squs").style.width;
+  widthLetters = width.split("");
+  widthLetters.pop();
+  widthLetters.pop();
+  let rows = widthLetters.join("");
+  rows = Math.floor(sketchWidth / rows);
+
+  var animation = anime.timeline({});
+  animation.add({
+    targets: ".squs",
+    translateX: anime.stagger(10, {
+      grid: [rows, rows],
+      from: "center",
+      axis: "x",
+    }),
+    translateY: anime.stagger(10, {
+      grid: [rows, rows],
+      from: "center",
+      axis: "y",
+    }),
+    rotateZ: anime.stagger([0, 90], {
+      grid: [rows, rows],
+      from: "center",
+      axis: "x",
+    }),
+    delay: anime.stagger(200, { grid: [rows, rows], from: "center" }),
+    easing: "easeInOutQuad",
   });
 }
