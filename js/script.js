@@ -14,8 +14,34 @@ const eraser = document.getElementById("eraser");
 const noGrid = document.getElementById("no_grid");
 const clear = document.getElementById("clear");
 const boom = document.getElementById("boom");
+const circle = document.getElementById("circle");
 
 noGrid.checked = false;
+
+// transform squars to circles
+circle.addEventListener('click', transform);
+let transCounter = 0;
+function transform() {
+ transCounter++;
+  let clickedBtn = false;
+  if (transCounter % 2 != 0) {
+    clickedBtn = true;
+  } else clickedBtn = false;
+  
+  if (clickedBtn == true) {
+    anime({
+      targets: '.squs',      
+      borderRadius: ["0%", "50%"],
+      easing: "easeInOutQuad",
+    });
+  } else {
+    anime({
+      targets: ".squs",      
+      borderRadius: ["50%", "0%"],
+      easing: "easeInOutQuad",      
+    });
+  }
+}
 
 // change grid with grid handler
 let range = document.getElementById("grid_range");
@@ -160,35 +186,68 @@ function resetAll() {
   });
 }
 
-boom.addEventListener("click", BoonAnimation);
+boom.addEventListener("click", BoomAnimation);
 
-function BoonAnimation() {
+let boomCounter = 0;
+
+function BoomAnimation() {
   let width = document.querySelector(".squs").style.width;
   widthLetters = width.split("");
   widthLetters.pop();
   widthLetters.pop();
   let rows = widthLetters.join("");
   rows = Math.floor(sketchWidth / rows);
-
-  var animation = anime.timeline({});
-  animation.add({
-    targets: ".squs",
-    translateX: anime.stagger(10, {
-      grid: [rows, rows],
-      from: "center",
-      axis: "x",
-    }),
-    translateY: anime.stagger(10, {
-      grid: [rows, rows],
-      from: "center",
-      axis: "y",
-    }),
-    rotateZ: anime.stagger([0, 90], {
-      grid: [rows, rows],
-      from: "center",
-      axis: "x",
-    }),
-    delay: anime.stagger(200, { grid: [rows, rows], from: "center" }),
-    easing: "easeInOutQuad",
-  });
+  
+  boomCounter++;
+  let clickedBtn = false;
+  if (boomCounter % 2 != 0) {
+    clickedBtn = true;
+  } else clickedBtn = false;
+  
+  if (clickedBtn == true) {
+    
+    var animation = anime.timeline({});
+    animation.add({
+      targets: ".squs",
+      translateX: anime.stagger(10, {
+        grid: [rows, rows],
+        from: "center",
+        axis: "x",
+      }),
+      translateY: anime.stagger(10, {
+        grid: [rows, rows],
+        from: "center",
+        axis: "y",
+      }),
+      rotateZ: anime.stagger([0, 75], {
+        grid: [rows, rows],
+        from: "center",
+        axis: "x",
+      }),
+      delay: anime.stagger(200, { grid: [rows, rows], from: "center" }),
+      easing: "easeInOutQuad",
+    });
+  } else {
+    var animation2 = anime.timeline({});
+    animation2.add({
+      targets: ".squs",
+      translateX: anime.stagger(0, {
+        grid: [rows, rows],
+        from: "center",
+        axis: "x",
+      }),
+      translateY: anime.stagger(0, {
+        grid: [rows, rows],
+        from: "center",
+        axis: "y",
+      }),
+      rotateZ: anime.stagger([0, 0], {
+        grid: [rows, rows],
+        from: "center",
+        axis: "x",
+      }),
+      delay: anime.stagger(200, { grid: [rows, rows], from: "center" }),
+      easing: "easeInOutQuad",
+    });
+  }
 }
